@@ -1,4 +1,3 @@
-//start nav-bar
 let scrolledNav = document.getElementsByClassName("nav-bar")[0];
 window.onscroll = function () {
   scrolledNav.classList.add("scroll");
@@ -38,17 +37,20 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-//cards
-for (let i = 0; i < 9; ++i) {
-  let cards = document.getElementsByClassName("cards")[i];
-  let cardLenght = cards.children[0].offsetWidth;
+let cardsElements = document.getElementsByClassName("cards");
+
+for (let i = 0; i < cardsElements.length; ++i) {
+  let cards = cardsElements[i];
+  if (!cards || !cards.children.length) continue;
+
+  let cardLength = cards.children[0].offsetWidth;
   let arrowLeft = document.getElementsByClassName("arrow-left")[i];
   let arrowRight = document.getElementsByClassName("arrow-right")[i];
 
-  let scrollStep = cardLenght + 25;
-
+  let scrollStep = cardLength + 25;
   let maxScroll = cards.scrollWidth - cards.offsetWidth;
-  arrowRight.addEventListener("click", () => {
+
+  arrowRight?.addEventListener("click", () => {
     cards.scrollLeft += scrollStep;
     if (cards.scrollLeft >= maxScroll) {
       cards.scrollLeft = maxScroll;
@@ -57,7 +59,7 @@ for (let i = 0; i < 9; ++i) {
     arrowLeft.style.display = "block";
   });
 
-  arrowLeft.addEventListener("click", () => {
+  arrowLeft?.addEventListener("click", () => {
     cards.scrollLeft -= scrollStep;
     if (cards.scrollLeft <= 0) {
       cards.scrollLeft = 0;
@@ -65,44 +67,18 @@ for (let i = 0; i < 9; ++i) {
     }
     arrowRight.style.display = "block";
   });
-  arrowLeft.style.display = "none";
+
+  if (arrowLeft) arrowLeft.style.display = "none";
 }
 
-let cards = document.getElementsByClassName("cards")[3];
-let cardLenght = cards.children[0].offsetWidth;
-let arrowLeft = document.getElementsByClassName("arrow-left")[3];
-let arrowRight = document.getElementsByClassName("arrow-right")[3];
-
-let scrollStep = cardLenght;
-
-let maxScroll = cards.scrollWidth ;
-//- cards.offsetWidth;
-arrowRight.addEventListener("click", () => {
-  cards.scrollLeft += scrollStep;
-  if (cards.scrollLeft >= maxScroll) {
-    cards.scrollLeft = maxScroll;
-    arrowRight.style.display = "none";
-  }
-  arrowLeft.style.display = "block";
-});
-
-arrowLeft.addEventListener("click", () => {
-  cards.scrollLeft -= scrollStep;
-  if (cards.scrollLeft <= 0) {
-    cards.scrollLeft = 0;
-    arrowLeft.style.display = "none";
-  }
-  arrowRight.style.display = "block";
-});
-arrowLeft.style.display = "none";
-
-
-let videos=document.querySelectorAll("video");
-videos.forEach(video=>{
-  video.onmouseenter = function () {
-    video.setAttribute("controls", "");
-  };
-  video.onmouseleave = function () {
-    video.removeAttribute("controls");
-  };
+document.addEventListener("DOMContentLoaded", () => {
+  let videos = document.querySelectorAll("video");
+  videos.forEach(video => {
+    video.addEventListener("mouseenter", () => {
+      video.setAttribute("controls", "");
+    });
+    video.addEventListener("mouseleave", () => {
+      video.removeAttribute("controls");
+    });
+  });
 });
